@@ -12,9 +12,24 @@ namespace LearningWinFormsApp2
 {
     public partial class ResultForm : Form
     {
-        public ResultForm()
+        public ResultForm(List<List<string>> dataList)
         {
             InitializeComponent();
+
+            LoadData(dataList);
+        }
+
+        static void LoadData(List<List<string>> dataList)
+        {
+            foreach(List<string> data in dataList)
+            {
+                dataGridView1.Rows.Add(data.ToArray());
+            }
+        }
+
+        private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+
         }
     }
 }
