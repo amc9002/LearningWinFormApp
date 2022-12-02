@@ -18,7 +18,7 @@ namespace LearningWinFormsApp2
         {
             List<List<string>> dataList = new();
             ISheet sheet;
-            using var stream = new FileStream("TestData.xlsx", FileMode.Open);
+            using var stream = new FileStream("./TestData.xlsx", FileMode.Open);
             {
                 stream.Position = 0;
                 var xssWorkbook = new XSSFWorkbook(stream);
