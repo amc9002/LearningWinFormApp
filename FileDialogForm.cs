@@ -10,15 +10,20 @@ namespace LearningWinFormsApp2
         public FileDialogForm()
         {
             InitializeComponent();
-            ShowDialog();
+
+
             button1.Click += button1_Click;
         }
 
         private void button1_Click(object sender, EventArgs e)
         {
+            openFileDialog1.Filter = "Excel files(*.xls; *.xlsx)|*.xls; *.xlsx";
+            if (openFileDialog1.ShowDialog() == DialogResult.Cancel) return;
+            string filename = openFileDialog1.FileName;
+
             List<List<string>> dataList = new();
             ISheet sheet;
-            using var stream = new FileStream("./TestData.xlsx", FileMode.Open);
+            using var stream = new FileStream(filename, FileMode.Open);
             {
                 stream.Position = 0;
                 var xssWorkbook = new XSSFWorkbook(stream);
