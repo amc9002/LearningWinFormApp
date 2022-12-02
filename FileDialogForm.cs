@@ -10,8 +10,6 @@ namespace LearningWinFormsApp2
         public FileDialogForm()
         {
             InitializeComponent();
-
-
             button1.Click += button1_Click;
         }
 
@@ -19,6 +17,7 @@ namespace LearningWinFormsApp2
         {
             openFileDialog1.Filter = "Excel files(*.xls; *.xlsx)|*.xls; *.xlsx";
             if (openFileDialog1.ShowDialog() == DialogResult.Cancel) return;
+
             string filename = openFileDialog1.FileName;
 
             List<List<string>> dataList = new();
@@ -70,8 +69,7 @@ namespace LearningWinFormsApp2
 
             }
 
-
-            var newResultForm = new ResultForm();
+            var newResultForm = new ResultForm(dataList);
             newResultForm.Show();
 
         }

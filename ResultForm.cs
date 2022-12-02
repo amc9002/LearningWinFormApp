@@ -19,9 +19,14 @@ namespace LearningWinFormsApp2
             LoadData(dataList);
         }
 
-        static void LoadData(List<List<string>> dataList)
+        void LoadData(List<List<string>> dataList)
         {
-            foreach(List<string> data in dataList)
+            for (int i = 0; i < dataList[0].Count - 1; i++)
+            {
+                dataGridView1.Columns.Add(new DataGridViewTextBoxColumn());
+            }
+
+            foreach (List<string> data in dataList)
             {
                 dataGridView1.Rows.Add(data.ToArray());
             }
