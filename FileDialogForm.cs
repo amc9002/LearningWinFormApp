@@ -1,7 +1,9 @@
+using NPOI.HSSF.UserModel;
 using NPOI.SS.UserModel;
 using NPOI.XSSF.UserModel;
 
 using System.Data;
+using System.IO;
 
 namespace LearningWinFormsApp2
 {
@@ -10,24 +12,38 @@ namespace LearningWinFormsApp2
         public FileDialogForm()
         {
             InitializeComponent();
+
             button1.Click += button1_Click;
         }
 
         private void button1_Click(object sender, EventArgs e)
         {
             openFileDialog1.Filter = "Excel files(*.xls; *.xlsx)|*.xls; *.xlsx";
-            if (openFileDialog1.ShowDialog() == DialogResult.Cancel) return;
+            if (openFileDialog1.ShowDialog() == DialogResult.Cancel)
+            {
+                return;
+            }
 
             string filename = openFileDialog1.FileName;
 
             List<List<string>> dataList = new();
             ISheet sheet;
-            using var stream = new FileStream(filename, FileMode.Open);
+            IWorkbook? workbook = null;
+            using var stream = new FileStream(filename, FileMode.Open, FileAccess.Read);
             {
                 stream.Position = 0;
-                var xssWorkbook = new XSSFWorkbook(stream);
-                sheet = xssWorkbook.GetSheetAt(0);
+
+                if (filename.IndexOf(".xlsx") > 0)
+                    workbook = new XSSFWorkbook(stream);
+ 
+                else if (filename.IndexOf(".xls") > 0)
+                    workbook = new HSSFWorkbook(stream);
+
+                if (workbook == null) return;
+
+                sheet = workbook.GetSheetAt(0);
                 IRow headerRow = sheet.GetRow(0);
+
                 int cellCount = headerRow.LastCellNum;
 
                 List<string> headerdataList = new();
@@ -35,6 +51,7 @@ namespace LearningWinFormsApp2
                 for (int j = 0; j < cellCount; j++)
                 {
                     ICell cell = headerRow.GetCell(j);
+                    
                     if (cell == null || string.IsNullOrWhiteSpace(cell.ToString()))
                     {
                         headerdataList.Add(string.Empty);

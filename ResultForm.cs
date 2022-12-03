@@ -24,12 +24,12 @@ namespace LearningWinFormsApp2
             for (int i = 0; i < dataList[0].Count - 1; i++)
             {
                 dataGridView1.Columns.Add(new DataGridViewTextBoxColumn());
+                //dataGridView1.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.DisplayedCells;
             }
 
             foreach (List<string> data in dataList)
-            {
                 dataGridView1.Rows.Add(data.ToArray());
-            }
+
         }
 
         private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
