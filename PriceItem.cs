@@ -8,8 +8,8 @@ namespace LearningWinFormsApp2
 {
     class PriceItem
     {
-        public string? Id { get; set; }
-        public string? Name { get; set; }
+        public string Id { get; set; } = string.Empty;
+        public string Name { get; set; } = string.Empty;
         public decimal? Price { get; set; } = null;
         public bool Stock { get; set; }
     }

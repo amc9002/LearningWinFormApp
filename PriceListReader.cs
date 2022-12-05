@@ -8,7 +8,7 @@ namespace LearningWinFormsApp2
 {
     class PriceListReader
     {
-        public List<PriceItem> Read(List<List<string>> dataList)
+        public static List<PriceItem> Read(List<List<string>> dataList)
         {
             List<PriceItem> priceItems = new();
 

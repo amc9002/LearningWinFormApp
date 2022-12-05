@@ -35,8 +35,7 @@ namespace LearningWinFormsApp2
 
         void LoadParsedData(List<List<string>> dataList)
         {
-            var priceListReader = new PriceListReader();
-            var priceItems = priceListReader.Read(dataList);
+            var priceItems = PriceListReader.Read(dataList);
 
             int countOfProperties = typeof(PriceItem).GetProperties().Length;
 
@@ -48,20 +47,12 @@ namespace LearningWinFormsApp2
 
             foreach (var p in priceItems)
             {
-                List<string> priceItem = new();
-                priceItem.Add(p.Id);
-
-                string price = String.Empty;
-                if (p.Price != null) price = p.Price.ToString();
-                priceItem.Add(price);
-
-                priceItem.Add(p.Name);
-
-                string stock = "есть";
-                if (!p.Stock) stock = "нет";
-                priceItem.Add(stock);
-
-                dataGridView2.Rows.Add(priceItem.ToArray());
+                dataGridView2.Rows.Add(new string[] {
+                    p.Id,
+                    p.Price == null ? string.Empty : p.Price.Value.ToString(),
+                    p.Name,
+                    p.Stock ? "есть" : "нет"
+                });
             }
 
             dataGridView2.Rows[0].Frozen = true;
