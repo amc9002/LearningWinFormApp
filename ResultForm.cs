@@ -16,29 +16,46 @@ namespace LearningWinFormsApp2
         {
             InitializeComponent();
 
-            LoadData(dataList);
+            LoadInitialData(dataList);
 
-            ParseData(dataList);
+            LoadParsedData(dataList);
+
         }
 
-        void LoadData(List<List<string>> dataList)
+        void LoadInitialData(List<List<string>> dataList)
         {
             int maxCellCount = dataList.Max(dl => dl.Count);
             for (int i = 0; i < maxCellCount - 1; i++)
-            {
                 dataGridView1.Columns.Add(new DataGridViewTextBoxColumn());
 
-            }
-
-            foreach (List<string> data in dataList)
+            foreach (var data in dataList)
                 dataGridView1.Rows.Add(data.ToArray());
         }
 
-        void ParseData(List<List<string>> dataList)
+        void LoadParsedData(List<List<string>> dataList)
         {
             var priceListReader = new PriceListReader();
-            priceListReader.Read(dataList);
+            var priceItems = priceListReader.Read(dataList);
 
+            for (int i = 0; i < 3; i++)
+                dataGridView2.Columns.Add(new DataGridViewTextBoxColumn());
+
+            foreach (var p in priceItems)
+            {
+                List<string> priceItem = new();
+                priceItem.Add(p.Id);
+                priceItem.Add(p.Name);
+
+                string price = String.Empty;
+                if (p.Price != null) price = p.Price.ToString();
+                priceItem.Add(price);
+
+                string stock = "есть";
+                if (!p.Stock) stock = "нет";
+                priceItem.Add(stock);
+
+                dataGridView2.Rows.Add(priceItem.ToArray());
+            }
         }
 
         private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)

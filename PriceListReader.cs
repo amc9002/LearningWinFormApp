@@ -26,7 +26,7 @@ namespace LearningWinFormsApp2
 
                     priceItem.Stock = true;
                     var stock = dataList[i][4].ToLower();
-                    if (stock == "нет в наличии") priceItem.Stock = false;
+                    if (stock == "нет в наличии" || stock == "транзит") priceItem.Stock = false;
 
                     priceItems.Add(priceItem);
                 }
