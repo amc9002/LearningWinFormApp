@@ -12,15 +12,16 @@ namespace LearningWinFormsApp2
 {
     public partial class ResultForm : Form
     {
-        public ResultForm(List<List<string>> dataList, int maxCellCount)
+        public ResultForm(List<List<string>> dataList)
         {
             InitializeComponent();
 
-            LoadData(dataList, maxCellCount);
+            LoadData(dataList);
         }
 
-        void LoadData(List<List<string>> dataList, int maxCellCount)
+        void LoadData(List<List<string>> dataList)
         {
+            int maxCellCount = dataList.Max(dl => dl.Count);
             for (int i = 0; i < maxCellCount - 1; i++)
             {
                 dataGridView1.Columns.Add(new DataGridViewTextBoxColumn());
