@@ -29,55 +29,65 @@ namespace LearningWinFormsApp2
             List<List<string>> dataList = new();
             ISheet sheet;
             IWorkbook? workbook = null;
+
+            int maxCellCount = 0;
+
             using var stream = new FileStream(filename, FileMode.Open, FileAccess.Read);
             {
                 stream.Position = 0;
 
                 if (filename.IndexOf(".xlsx") > 0)
                     workbook = new XSSFWorkbook(stream);
- 
+
                 else if (filename.IndexOf(".xls") > 0)
                     workbook = new HSSFWorkbook(stream);
 
                 if (workbook == null) return;
 
+                workbook.MissingCellPolicy = MissingCellPolicy.CREATE_NULL_AS_BLANK;
                 sheet = workbook.GetSheetAt(0);
-                IRow headerRow = sheet.GetRow(0);
+                //IRow headerRow = sheet.GetRow(0);
 
-                int cellCount = headerRow.LastCellNum;
+                //int cellCount = headerRow.LastCellNum;
 
-                List<string> headerdataList = new();
+                //List<string> headerdataList = new();
 
-                for (int j = 0; j < cellCount; j++)
+                //for (int j = 0; j < cellCount; j++)
+                //{
+                //    ICell cell = headerRow.GetCell(j);
+
+                //    if (cell == null || string.IsNullOrWhiteSpace(cell.ToString()))
+                //    {
+                //        headerdataList.Add(string.Empty);
+                //        continue;
+                //    }
+
+                //    headerdataList.Add(cell.ToString());
+                //}
+
+                //dataList.Add(headerdataList);
+                
+                for (int i = (sheet.FirstRowNum); i <= sheet.LastRowNum; i++)
                 {
-                    ICell cell = headerRow.GetCell(j);
-                    
-                    if (cell == null || string.IsNullOrWhiteSpace(cell.ToString()))
-                    {
-                        headerdataList.Add(string.Empty);
-                        continue;
-                    }
 
-                    headerdataList.Add(cell.ToString());
-                }
-
-                dataList.Add(headerdataList);
-
-                for (int i = (sheet.FirstRowNum + 1); i <= sheet.LastRowNum; i++)
-                {
                     List<string> ordinaryRowList = new();
                     IRow row = sheet.GetRow(i);
+
+                    int cellCount = row.LastCellNum;
+                    if (cellCount > maxCellCount)
+                        maxCellCount = cellCount;
+
                     if (row == null) continue;
                     //if (row.Cells.All(d => d.CellType == CellType.Blank)) continue;
-                    for (int j = row.FirstCellNum; j < cellCount; j++)
+                    for (int j = 0; j < cellCount; j++)
                     {
-                        if (string.IsNullOrEmpty(row.GetCell(j).ToString()) ||
-                            string.IsNullOrWhiteSpace(row.GetCell(j).ToString()))
-                        {
-                            ordinaryRowList.Add(string.Empty);
-                            continue;
-                        }
-                        ordinaryRowList.Add(row.GetCell(j).ToString());
+                        //if (string.IsNullOrEmpty(row.GetCell(j).ToString()) ||
+                        //    string.IsNullOrWhiteSpace(row.GetCell(j).ToString()))
+                        //{
+                        //    ordinaryRowList.Add(string.Empty);
+                        //    continue;
+                        //}
+                        ordinaryRowList.Add(row.GetCell(j, MissingCellPolicy.CREATE_NULL_AS_BLANK).ToString());
 
                     }
 
@@ -86,7 +96,7 @@ namespace LearningWinFormsApp2
 
             }
 
-            var newResultForm = new ResultForm(dataList);
+            var newResultForm = new ResultForm(dataList, maxCellCount);
             newResultForm.Show();
 
         }

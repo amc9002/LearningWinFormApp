@@ -12,19 +12,19 @@ namespace LearningWinFormsApp2
 {
     public partial class ResultForm : Form
     {
-        public ResultForm(List<List<string>> dataList)
+        public ResultForm(List<List<string>> dataList, int maxCellCount)
         {
             InitializeComponent();
 
-            LoadData(dataList);
+            LoadData(dataList, maxCellCount);
         }
 
-        void LoadData(List<List<string>> dataList)
+        void LoadData(List<List<string>> dataList, int maxCellCount)
         {
-            for (int i = 0; i < dataList[0].Count - 1; i++)
+            for (int i = 0; i < maxCellCount - 1; i++)
             {
                 dataGridView1.Columns.Add(new DataGridViewTextBoxColumn());
-                //dataGridView1.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.DisplayedCells;
+                
             }
 
             foreach (List<string> data in dataList)
