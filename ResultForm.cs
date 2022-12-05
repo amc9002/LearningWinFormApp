@@ -31,9 +31,17 @@ namespace LearningWinFormsApp2
             foreach (List<string> data in dataList)
                 dataGridView1.Rows.Add(data.ToArray());
 
+            var priceListReader = new PriceListReader();
+            priceListReader.Read(dataList);
         }
 
         private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+
+        }
+
+
+        private void dataGridView2_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
 
         }

@@ -59,7 +59,17 @@ namespace LearningWinFormsApp2
                     if (row == null) continue;
 
                     for (int j = 0; j < cellCount; j++)
-                        rowList.Add(row.GetCell(j, MissingCellPolicy.CREATE_NULL_AS_BLANK).ToString());
+                    {
+                        ICell cell = row.GetCell(j);
+                        if (j == 0)
+                        {
+                            cell.SetCellType(NPOI.SS.UserModel.CellType.String);
+                            rowList.Add(cell.ToString());
+                        }
+
+                        else
+                            rowList.Add(row.GetCell(j, MissingCellPolicy.CREATE_NULL_AS_BLANK).ToString());
+                    }
 
                     dataList.Add(rowList);
                 }
