@@ -60,15 +60,11 @@ namespace LearningWinFormsApp2
 
                     for (int j = 0; j < cellCount; j++)
                     {
-                        ICell cell = row.GetCell(j);
-                        if (j == 0)
-                        {
-                            cell.SetCellType(NPOI.SS.UserModel.CellType.String);
-                            rowList.Add(cell.ToString());
-                        }
+                        ICell cell = row.GetCell(j, MissingCellPolicy.CREATE_NULL_AS_BLANK);
 
-                        else
-                            rowList.Add(row.GetCell(j, MissingCellPolicy.CREATE_NULL_AS_BLANK).ToString());
+                        if (j == 0) cell.SetCellType(NPOI.SS.UserModel.CellType.String); //if cell contains formula
+
+                        rowList.Add(cell.ToString());
                     }
 
                     dataList.Add(rowList);
