@@ -46,7 +46,7 @@ namespace LearningWinFormsApp2
 
                 workbook.MissingCellPolicy = MissingCellPolicy.CREATE_NULL_AS_BLANK;
                 sheet = workbook.GetSheetAt(0);
-               
+
                 for (int i = (sheet.FirstRowNum); i <= sheet.LastRowNum; i++)
                 {
                     List<string> rowList = new();
@@ -60,9 +60,9 @@ namespace LearningWinFormsApp2
 
                     for (int j = 0; j < cellCount; j++)
                     {
-                        ICell cell = row.GetCell(j, MissingCellPolicy.CREATE_NULL_AS_BLANK);
+                        ICell cell = row.GetCell(j);
 
-                        if (j == 0) cell.SetCellType(NPOI.SS.UserModel.CellType.String); //if cell contains formula
+                        if (j == 0) cell.SetCellType(NPOI.SS.UserModel.CellType.String); //if the cell contains formula
 
                         rowList.Add(cell.ToString());
                     }

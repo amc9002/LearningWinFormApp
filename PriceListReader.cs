@@ -10,13 +10,13 @@ namespace LearningWinFormsApp2
     {
         public List<PriceItem> Read(List<List<string>> dataList)
         {
-            List<PriceItem> priceItems = new List<PriceItem>();
+            List<PriceItem> priceItems = new();
 
             for(int i=0; i < dataList.Count; i++) 
             {
                 if (int.TryParse(dataList[i][0], out int number))
                 {
-                    PriceItem priceItem = new PriceItem();
+                    var priceItem = new PriceItem();
 
                     priceItem.Name = dataList[i][1];
                     priceItem.Id = dataList[i][2];

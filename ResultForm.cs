@@ -38,7 +38,9 @@ namespace LearningWinFormsApp2
             var priceListReader = new PriceListReader();
             var priceItems = priceListReader.Read(dataList);
 
-            for (int i = 0; i < 3; i++)
+            int countOfProperties = typeof(PriceItem).GetProperties().Length;
+
+            for (int i = 0; i < countOfProperties - 1; i++)
                 dataGridView2.Columns.Add(new DataGridViewTextBoxColumn());
 
             string[] headerRow = { "Артикул", "Цена", "Наименование", "Наличие" };
