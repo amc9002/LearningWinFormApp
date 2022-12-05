@@ -10,6 +10,7 @@ using System.Windows.Forms;
 
 namespace LearningWinFormsApp2
 {
+
     public partial class ResultForm : Form
     {
         public ResultForm(List<List<string>> dataList)
@@ -40,15 +41,19 @@ namespace LearningWinFormsApp2
             for (int i = 0; i < 3; i++)
                 dataGridView2.Columns.Add(new DataGridViewTextBoxColumn());
 
+            string[] headerRow = { "Артикул", "Цена", "Наименование", "Наличие" };
+            dataGridView2.Rows.Add(headerRow);
+
             foreach (var p in priceItems)
             {
                 List<string> priceItem = new();
                 priceItem.Add(p.Id);
-                priceItem.Add(p.Name);
 
                 string price = String.Empty;
                 if (p.Price != null) price = p.Price.ToString();
                 priceItem.Add(price);
+
+                priceItem.Add(p.Name);
 
                 string stock = "есть";
                 if (!p.Stock) stock = "нет";
@@ -56,6 +61,8 @@ namespace LearningWinFormsApp2
 
                 dataGridView2.Rows.Add(priceItem.ToArray());
             }
+
+            dataGridView2.Rows[0].Frozen = true;
         }
 
         private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
