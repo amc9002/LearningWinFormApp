@@ -68,7 +68,7 @@ namespace LearningWinFormsApp2
                     List<string> ordinaryRowList = new();
                     IRow row = sheet.GetRow(i);
                     if (row == null) continue;
-                    if (row.Cells.All(d => d.CellType == CellType.Blank)) continue;
+                    //if (row.Cells.All(d => d.CellType == CellType.Blank)) continue;
                     for (int j = row.FirstCellNum; j < cellCount; j++)
                     {
                         if (string.IsNullOrEmpty(row.GetCell(j).ToString()) ||
