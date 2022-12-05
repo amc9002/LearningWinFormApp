@@ -17,6 +17,8 @@ namespace LearningWinFormsApp2
             InitializeComponent();
 
             LoadData(dataList);
+
+            ParseData(dataList);
         }
 
         void LoadData(List<List<string>> dataList)
@@ -25,21 +27,24 @@ namespace LearningWinFormsApp2
             for (int i = 0; i < maxCellCount - 1; i++)
             {
                 dataGridView1.Columns.Add(new DataGridViewTextBoxColumn());
-                
+
             }
 
             foreach (List<string> data in dataList)
                 dataGridView1.Rows.Add(data.ToArray());
+        }
 
+        void ParseData(List<List<string>> dataList)
+        {
             var priceListReader = new PriceListReader();
             priceListReader.Read(dataList);
+
         }
 
         private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
 
         }
-
 
         private void dataGridView2_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
