@@ -60,27 +60,40 @@ namespace LearningWinFormsApp2
 
         private void dataGridView2_CellClick(object sender, DataGridViewCellEventArgs e)
         {
-            this.dataGridView1.MultiSelect = false;
+            SelectRowOnDatagrid1(e.RowIndex);
+        }
 
-            this.dataGridView2.Rows[e.RowIndex].Selected = true; 
-
-            if (e.RowIndex >= 0)
+        private void dataGridView2_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode.Equals(Keys.Down) || e.KeyCode.Equals(Keys.Up))
             {
-                var row = this.dataGridView2.Rows[e.RowIndex];
+                SelectRowOnDatagrid1(dataGridView2.SelectedCells[0].RowIndex);
+            }
+
+            e.Handled = true;
+        }
+
+        private void SelectRowOnDatagrid1(int dataGridView2_RowIndex)
+        {
+            dataGridView1.MultiSelect = false;
+            dataGridView2.Rows[dataGridView2_RowIndex].Selected = true;
+
+            if (dataGridView2_RowIndex >= 0)
+            {
+                var row = dataGridView2.Rows[dataGridView2_RowIndex];
                 string id = row.Cells[0].Value.ToString();
 
-                int rowIndex = -1;
-                foreach(DataGridViewRow r in this.dataGridView1.Rows)
-                {
-                    if (r.Cells[2].Value.ToString() == id)
-                    {
-                        rowIndex = r.Index;
-                        break;
-                    }
-                }
+                int dataGridView1_rowIndex = -1;
 
-                this.dataGridView1.Rows[rowIndex].Selected = true;
-                this.dataGridView1.FirstDisplayedScrollingRowIndex = dataGridView2.SelectedRows[0].Index;
+                DataGridViewRow seekingRow = dataGridView1.Rows
+                    .Cast<DataGridViewRow>()
+                    .Where(r => r.Cells[2].Value.ToString().Equals(id))
+                    .First();
+
+                dataGridView1_rowIndex = seekingRow.Index;
+
+                dataGridView1.Rows[dataGridView1_rowIndex].Selected = true;
+                dataGridView1.FirstDisplayedScrollingRowIndex = dataGridView2.SelectedRows[0].Index;
             }
         }
     }
