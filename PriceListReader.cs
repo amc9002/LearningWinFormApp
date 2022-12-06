@@ -12,20 +12,20 @@ namespace LearningWinFormsApp2
         {
             List<PriceItem> priceItems = new();
 
-            for(int i=0; i < dataList.Count; i++) 
+            foreach (var d in dataList)
             {
-                if (int.TryParse(dataList[i][0], out int number))
+                if (int.TryParse(d[0], out int number))
                 {
-                    var priceItem = new PriceItem();
+                    var priceItem = new PriceItem
+                    {
+                        Name = d[1],
+                        Id = d[2],
+                        Stock = true
+                    };
 
-                    priceItem.Name = dataList[i][1];
-                    priceItem.Id = dataList[i][2];
+                    if (d[6] != string.Empty) priceItem.Price = Convert.ToDecimal(d[6]);
 
-                    if(dataList[i][6] != string.Empty)
-                        priceItem.Price = Convert.ToDecimal(dataList[i][6]);
-
-                    priceItem.Stock = true;
-                    var stock = dataList[i][4].ToLower();
+                    var stock = d[4].ToLower();
                     if (stock == "нет в наличии" || stock == "транзит") priceItem.Stock = false;
 
                     priceItems.Add(priceItem);

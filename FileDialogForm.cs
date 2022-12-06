@@ -32,44 +32,52 @@ namespace LearningWinFormsApp2
 
             int maxCellCount = 0;
 
-            using var stream = new FileStream(filename, FileMode.Open, FileAccess.Read);
+            try
             {
-                stream.Position = 0;
-
-                if (filename.IndexOf(".xlsx") > 0)
-                    workbook = new XSSFWorkbook(stream);
-
-                else if (filename.IndexOf(".xls") > 0)
-                    workbook = new HSSFWorkbook(stream);
-
-                if (workbook == null) return;
-
-                workbook.MissingCellPolicy = MissingCellPolicy.CREATE_NULL_AS_BLANK;
-                sheet = workbook.GetSheetAt(0);
-
-                for (int i = (sheet.FirstRowNum); i <= sheet.LastRowNum; i++)
+                using var stream = new FileStream(filename, FileMode.Open, FileAccess.Read);
                 {
-                    List<string> rowList = new();
-                    IRow row = sheet.GetRow(i);
+                    stream.Position = 0;
 
-                    int cellCount = row.LastCellNum;
-                    if (cellCount > maxCellCount)
-                        maxCellCount = cellCount;
+                    if (filename.IndexOf(".xlsx") > 0)
+                        workbook = new XSSFWorkbook(stream);
 
-                    if (row == null) continue;
+                    else if (filename.IndexOf(".xls") > 0)
+                        workbook = new HSSFWorkbook(stream);
 
-                    for (int j = 0; j < cellCount; j++)
+                    if (workbook == null) return;
+
+                    workbook.MissingCellPolicy = MissingCellPolicy.CREATE_NULL_AS_BLANK;
+                    sheet = workbook.GetSheetAt(0);
+
+                    for (int i = (sheet.FirstRowNum); i <= sheet.LastRowNum; i++)
                     {
-                        ICell cell = row.GetCell(j);
+                        List<string> rowList = new();
+                        IRow row = sheet.GetRow(i);
 
-                        if (j == 0) cell.SetCellType(NPOI.SS.UserModel.CellType.String); //if the cell contains formula
+                        int cellCount = row.LastCellNum;
+                        if (cellCount > maxCellCount)
+                            maxCellCount = cellCount;
 
-                        rowList.Add(cell.ToString());
+                        if (row == null) continue;
+
+                        for (int j = 0; j < cellCount; j++)
+                        {
+                            ICell cell = row.GetCell(j);
+
+                            if (j == 0) cell.SetCellType(NPOI.SS.UserModel.CellType.String); //if the cell contains formula
+
+                            rowList.Add(cell.ToString());
+                        }
+
+                        dataList.Add(rowList);
                     }
-
-                    dataList.Add(rowList);
                 }
+            }
 
+            catch (Exception ex)
+            {
+                MessageBox.Show("Exception: ", ex.Message);
+                return;
             }
 
             var newResultForm = new ResultForm(dataList);

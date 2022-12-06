@@ -42,9 +42,6 @@ namespace LearningWinFormsApp2
             for (int i = 0; i < countOfProperties - 1; i++)
                 dataGridView2.Columns.Add(new DataGridViewTextBoxColumn());
 
-            string[] headerRow = { "Артикул", "Цена", "Наименование", "Наличие" };
-            dataGridView2.Rows.Add(headerRow);
-
             foreach (var p in priceItems)
             {
                 dataGridView2.Rows.Add(new string[] {
