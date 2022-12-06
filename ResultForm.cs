@@ -51,8 +51,6 @@ namespace LearningWinFormsApp2
                     p.Stock ? "есть" : "нет"
                 });
             }
-
-            dataGridView2.Rows[0].Frozen = true;
         }
 
         private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
@@ -60,9 +58,30 @@ namespace LearningWinFormsApp2
 
         }
 
-        private void dataGridView2_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        private void dataGridView2_CellClick(object sender, DataGridViewCellEventArgs e)
         {
+            this.dataGridView1.MultiSelect = false;
 
+            this.dataGridView2.Rows[e.RowIndex].Selected = true; 
+
+            if (e.RowIndex >= 0)
+            {
+                var row = this.dataGridView2.Rows[e.RowIndex];
+                string id = row.Cells[0].Value.ToString();
+
+                int rowIndex = -1;
+                foreach(DataGridViewRow r in this.dataGridView1.Rows)
+                {
+                    if (r.Cells[2].Value.ToString() == id)
+                    {
+                        rowIndex = r.Index;
+                        break;
+                    }
+                }
+
+                this.dataGridView1.Rows[rowIndex].Selected = true;
+                this.dataGridView1.FirstDisplayedScrollingRowIndex = dataGridView2.SelectedRows[0].Index;
+            }
         }
     }
 }

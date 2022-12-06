@@ -99,12 +99,13 @@
             this.Column3,
             this.Column4});
             this.dataGridView2.Location = new System.Drawing.Point(3, 6);
+            this.dataGridView2.MultiSelect = false;
             this.dataGridView2.Name = "dataGridView2";
             this.dataGridView2.RowHeadersWidth = 49;
             this.dataGridView2.RowTemplate.Height = 28;
-            this.dataGridView2.Size = new System.Drawing.Size(551, 293);
+            this.dataGridView2.Size = new System.Drawing.Size(554, 293);
             this.dataGridView2.TabIndex = 0;
-            this.dataGridView2.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView2_CellContentClick);
+            this.dataGridView2.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView2_CellClick);
             // 
             // dataGridViewTextBoxColumn1
             // 
