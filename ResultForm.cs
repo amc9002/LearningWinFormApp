@@ -36,36 +36,30 @@ namespace LearningWinFormsApp2
         {
             var priceItems = PriceListReader.Read(dataList);
 
-            int countOfProperties = typeof(PriceItem).GetProperties().Length;
-
             foreach (var p in priceItems)
             {
-                dataGridView2.Rows.Add(new string[] {
-                    p.Id,
-                    p.Price == null ? string.Empty : p.Price.Value.ToString(),
-                    p.Name,
-                    p.Stock ? "есть" : "нет"
-                });
+                DataGridViewRow row = new();
+                row.CreateCells(dataGridView2);
+
+                row.Cells[0].Value = p.Id;
+                row.Cells[1].Value = p.Price;
+                row.Cells[2].Value = p.Name;
+                row.Cells[3].Value = p.Stock ? "есть" : "нет";
+
+                row.Tag = p.NumberStringInitial;
+
+                dataGridView2.Rows.Add(row);
             }
         }
 
         private void dataGridView2_SelectionChanged(object sender, EventArgs e)
         {
-            SelectRowOnDatagrid1(dataGridView2.CurrentRow.Cells[0].Value.ToString());
+            SelectRowOnDatagrid1(Convert.ToInt32(dataGridView2.CurrentRow.Tag));
         }
 
-        private void SelectRowOnDatagrid1(string id)
+        private void SelectRowOnDatagrid1(int index)
         {
-            int dataGridView1_rowIndex = -1;
-
-            DataGridViewRow seekingRow = dataGridView1.Rows
-                .Cast<DataGridViewRow>()
-                .Where(r => r.Cells[2].Value.ToString().Equals(id))
-                .First();
-
-            dataGridView1_rowIndex = seekingRow.Index;
-
-            dataGridView1.Rows[dataGridView1_rowIndex].Selected = true;
+            dataGridView1.Rows[index].Selected = true;
             dataGridView1.FirstDisplayedScrollingRowIndex = dataGridView1.SelectedRows[0].Index;
         }
     }

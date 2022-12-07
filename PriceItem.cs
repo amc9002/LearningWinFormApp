@@ -12,5 +12,7 @@ namespace LearningWinFormsApp2
         public string Name { get; set; } = string.Empty;
         public decimal? Price { get; set; } = null;
         public bool Stock { get; set; }
+
+        public int NumberStringInitial { get; set; }
     }
 }

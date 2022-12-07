@@ -8,24 +8,31 @@ namespace LearningWinFormsApp2
 {
     class PriceListReader
     {
+        private const int COL_NAME = 1;
+        private const int COL_ID = 2;
+        private const int COL_STOCK = 4;
+        private const int COL_PRICE = 6;
+
         public static List<PriceItem> Read(List<List<string>> dataList)
         {
             List<PriceItem> priceItems = new();
 
-            foreach (var d in dataList)
+            for (int i = 0; i < dataList.Count; i++)
+
             {
-                if (int.TryParse(d[0], out int number))
+                if (int.TryParse(dataList[i][0], out int number))
                 {
                     var priceItem = new PriceItem
                     {
-                        Name = d[1],
-                        Id = d[2],
+                        NumberStringInitial = i,
+                        Name = dataList[i][COL_NAME],
+                        Id = dataList[i][COL_ID],
                         Stock = true
                     };
 
-                    if (d[6] != string.Empty) priceItem.Price = Convert.ToDecimal(d[6]);
+                    if (dataList[i][COL_PRICE] != string.Empty) priceItem.Price = Convert.ToDecimal(dataList[i][COL_PRICE]);
 
-                    var stock = d[4].ToLower();
+                    var stock = dataList[i][COL_STOCK].ToLower();
                     if (stock == "нет в наличии" || stock == "транзит") priceItem.Stock = false;
 
                     priceItems.Add(priceItem);
