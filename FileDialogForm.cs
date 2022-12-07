@@ -56,7 +56,7 @@ namespace LearningWinFormsApp2
 
                         if (row == null)
                         {
-                            var emptyRow = new List<string>{ string.Empty, string.Empty, string.Empty };
+                            var emptyRow = new List<string>{ string.Empty };
                             rowList.AddRange(emptyRow);
                             dataList.Add(rowList);
                             continue;
