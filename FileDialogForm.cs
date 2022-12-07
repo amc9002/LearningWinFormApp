@@ -30,7 +30,7 @@ namespace LearningWinFormsApp2
             ISheet sheet;
             IWorkbook? workbook = null;
 
-            int maxCellCount = 0;
+            int maxCellCount = 1;
 
             try
             {
@@ -49,16 +49,22 @@ namespace LearningWinFormsApp2
                     workbook.MissingCellPolicy = MissingCellPolicy.CREATE_NULL_AS_BLANK;
                     sheet = workbook.GetSheetAt(0);
 
-                    for (int i = (sheet.FirstRowNum); i <= sheet.LastRowNum; i++)
+                    for (int i = (sheet.FirstRowNum) - 1; i <= sheet.LastRowNum; i++)
                     {
                         List<string> rowList = new();
                         IRow row = sheet.GetRow(i);
 
+                        if (row == null)
+                        {
+                            var emptyRow = new List<string>{ string.Empty, string.Empty, string.Empty };
+                            rowList.AddRange(emptyRow);
+                            dataList.Add(rowList);
+                            continue;
+                        }
+
                         int cellCount = row.LastCellNum;
                         if (cellCount > maxCellCount)
                             maxCellCount = cellCount;
-
-                        if (row == null) continue;
 
                         for (int j = 0; j < cellCount; j++)
                         {
