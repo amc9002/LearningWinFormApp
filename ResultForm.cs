@@ -11,8 +11,14 @@ using System.Windows.Forms;
 namespace LearningWinFormsApp2
 {
 
+
     public partial class ResultForm : Form
     {
+        private const int ITEM_ID = 0;
+        private const int ITEM_PRICE = 1;
+        private const int ITEM_NAME = 2;
+        private const int ITEM_STOCK = 3;
+
         public ResultForm(List<List<string>> dataList)
         {
             InitializeComponent();
@@ -41,10 +47,10 @@ namespace LearningWinFormsApp2
                 DataGridViewRow row = new();
                 row.CreateCells(dataGridView2);
 
-                row.Cells[0].Value = p.Id;
-                row.Cells[1].Value = p.Price;
-                row.Cells[2].Value = p.Name;
-                row.Cells[3].Value = p.Stock ? "есть" : "нет";
+                row.Cells[ITEM_ID].Value = p.Id;
+                row.Cells[ITEM_PRICE].Value = p.Price;
+                row.Cells[ITEM_NAME].Value = p.Name;
+                row.Cells[ITEM_STOCK].Value = p.Stock ? "есть" : "нет";
 
                 row.Tag = p.NumberStringInitial;
 
