@@ -1,4 +1,6 @@
-﻿using System;
+﻿using NPOI.SS.Formula.Functions;
+
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -34,8 +36,19 @@ namespace LearningWinFormsApp2
             for (int i = 0; i < maxCellCount - 1; i++)
                 dataGridView1.Columns.Add(new DataGridViewTextBoxColumn());
 
-            foreach (var data in dataList)
-                dataGridView1.Rows.Add(data.ToArray());
+            for (int i = 0; i < dataList.Count; i++)
+            {
+                DataGridViewRow row = new();
+                row.CreateCells(dataGridView1);
+
+                for (int j = 0; j < dataList[i].Count; j++)
+                {
+                    row.Cells[j].Value = dataList[i][j];
+                }
+                row.Tag = i;
+
+                dataGridView1.Rows.Add(row);
+            }
         }
 
         void LoadParsedData(List<List<string>> dataList)
@@ -60,13 +73,21 @@ namespace LearningWinFormsApp2
 
         private void dataGridView2_SelectionChanged(object sender, EventArgs e)
         {
-            SelectRowOnDatagrid1(Convert.ToInt32(dataGridView2.CurrentRow.Tag));
+            SelectRowOnDatagrid1ByTag(Convert.ToInt32(dataGridView2.CurrentRow.Tag));
         }
 
-        private void SelectRowOnDatagrid1(int index)
+        private void dataGridView1_Sorted(object sender, EventArgs e)
         {
-            dataGridView1.Rows[index].Selected = true;
-            dataGridView1.FirstDisplayedScrollingRowIndex = dataGridView1.SelectedRows[0].Index;
+            SelectRowOnDatagrid1ByTag(Convert.ToInt32(dataGridView2.CurrentRow.Tag));
+        }
+
+        private void SelectRowOnDatagrid1ByTag(int tag)
+        {
+            var row = (dataGridView1.Rows.Cast<DataGridViewRow>()
+                .First(r => Convert.ToInt32(r.Tag) == tag));
+
+            row.Selected = true;
+            dataGridView1.FirstDisplayedScrollingRowIndex = row.Index;
         }
     }
 }
